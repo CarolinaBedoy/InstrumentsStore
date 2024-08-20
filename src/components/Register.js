@@ -74,7 +74,7 @@ function FormExample() {
     <div>
     <Form noValidate validated={validated} onSubmit={handleSubmit} style={{margin:'30px', padding:'20px', width:'400px', backgroundColor:'white'}}>
     <div style={{backgroundColor:'white', color:'black', textAlign:'center'}}>
-      <h1 style={{marginBottom:'30px'}}>REGISTRARSE</h1>
+      <h1 style={{marginBottom:'30px'}}>REGISTROTROTROTRO</h1>
       </div>
       <Row className="mb-3">
         <Form.Group as={Col} md="10" controlId="username">
