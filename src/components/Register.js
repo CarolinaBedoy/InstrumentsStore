@@ -5,14 +5,12 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useNavigate } from "react-router-dom";
 
-
 function FormExample() {
 
-
   const [validated, setValidated] = useState(false);
-  const [nombre, setNombre] = useState('');
-  const [correo, setCorreo] = useState('');
-  const [contrasena, setContrasena] = useState('');
+  const [name, setName] = useState('');
+  const [mail, setMail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
 
@@ -50,50 +48,79 @@ function FormExample() {
     setContrasena('');
     */
    
-      const user = {
+      /*const user = {
       "name": nombre,
       "mail": correo,
       "password": contrasena,
       }
+*/
 
-     
-      return(fetch("http://localhost:8081/register"), { //http://localhost:8081/register?name=name&email=email&password=password
-        mode: 'no-cors',
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {"Content-type": "application/json; charset=UTF-8"}
+    const data = {name, mail, password}
+    const options = {
+      mode: 'no-cors',
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+      }
+
+/*
+    return(
+      fetch('http://localhost:8081/register'), options
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .then((response) => console.log("Success", response)))
+      .catch(err => console.log(err)
+    )*/
+      
+      try {
+        const response =  fetch('http://localhost:8081/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+  
+        if (response.ok) {
+          console.log('Datos guardados correctamente');
+          console.log(data)
+          navigate("/home")
+        } else {
+          console.error('Error al guardar datos');
+        }
+      } catch (error) {
+        console.error('Error al conectar con el servidor:', error);
       }
       
-      .then(res => res.json())
-      //.then(data => console.log(user))
-      .catch(err => console.log(err))
-    )
-  }
+      }
+
 
   return (
     <div>
     <Form noValidate validated={validated} onSubmit={handleSubmit} style={{margin:'30px', padding:'20px', width:'400px', backgroundColor:'white'}}>
     <div style={{backgroundColor:'white', color:'black', textAlign:'center'}}>
-      <h1 style={{marginBottom:'30px'}}>REGISTROTROTROTRO</h1>
+      <h1 style={{marginBottom:'30px'}}>REGISTRO</h1>
       </div>
       <Row className="mb-3">
         <Form.Group as={Col} md="10" controlId="username">
-        <Form.Control type="text" placeholder="Username" value={nombre}
-            onChange={(e) => setNombre(e.target.value)} required />
+        <Form.Control type="text" placeholder="Username" value={name} 
+            onChange={(e) => setName(e.target.value)} required />
           <Form.Control.Feedback type="invalid">
             Ingresa un dato válido
           </Form.Control.Feedback>
         </Form.Group><br/> <br/> 
         <Form.Group as={Col} md="10" controlId="mail">
-        <Form.Control type="email" placeholder="@email" value={correo}
-            onChange={(e) => setCorreo(e.target.value)} required />
+        <Form.Control type="email" placeholder="@email" value={mail}
+            onChange={(e) => setMail(e.target.value)} required />
           <Form.Control.Feedback type="invalid">
             Ingresa un dato válido
           </Form.Control.Feedback>
         </Form.Group><br/> <br/> 
         <Form.Group as={Col} md="10" controlId="password">
-        <Form.Control type="password" placeholder="Password" value={contrasena}
-            onChange={(e) => setContrasena(e.target.value)} required />
+        <Form.Control type="password" placeholder="Password" value={password}
+            onChange={(e) => setPassword(e.target.value)} required />
           <Form.Control.Feedback type="invalid">
             Please provide a valid city.
           </Form.Control.Feedback>
