@@ -29,12 +29,11 @@ const db = mysql.createConnection({
 app.post('/register', (req, res) => {
     
 
-    
 
-    const obj = JSON.parse(JSON.stringify(req.body));
-    const passwordhash= "aes_encrypt(" + obj.password + " 'clave')"
+    const obj = JSON.parse(JSON.stringify(req.body));  
+    const passwordhash = "aes_encrypt('" + obj.password + "','clave')"
 
-    const sql = "INSERT INTO `users`(`name`, `email`, `password`) VALUES ('" + obj.name + "', '" + obj.mail + "', '" + obj.password + "')";
+    const sql = "INSERT INTO `users`(`name`, `email`, `password`) VALUES ('" + obj.name + "', '" + obj.mail + "', " + passwordhash + ")";
     //const sql = "INSERT INTO `users`(`name`, `email`, `password`) VALUES ('mateo', 'mateo', 'mateo')";
     db.query(sql, (err, data) => {
     console.log(obj);
